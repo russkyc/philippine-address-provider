@@ -10,10 +10,13 @@
         <PackageProjectUrl>https://github.com/russkyc/philippine-address-provider</PackageProjectUrl>
         <PackageIcon>PackageIcon.png</PackageIcon>
         <Nullable>enable</Nullable>
-        <Version>0.23.2</Version>
+        <Version>0.25.2</Version>
         <Description>PSGC Address Provider for CSharp</Description>
         <PackageTags>Address Philippines PH PhAddress Provider</PackageTags>
         <RepositoryUrl>https://github.com/russkyc/philippine-address-provider</RepositoryUrl>
+        <PackageReleaseNotes>BREAKING CHANGES:
+
+- All methods are now async by default</PackageReleaseNotes>
     </PropertyGroup>
     
     <PropertyGroup>

@@ -30,22 +30,28 @@ public partial class MainWindowViewModel : ObservableObject
 
     public MainWindowViewModel()
     {
-        Provinces = new ObservableCollection<Province>(AddressProvider.GetProvinces());
+        Provinces = new ObservableCollection<Province>(AddressProvider.GetProvincesAsync().Result);
     }
 
-    partial void OnProvinceChanged(Province value)
+    async partial void OnProvinceChanged(Province? value)
     {
-        CityMunicipalities =
-            new ObservableCollection<CityMunicipality>(
-                AddressProvider.GetCitiesMunicipalitiesByProvinceCode(value.Code));
+        if (value == null)
+        {
+            return;
+        }
+        var citiesMunicipalities = await AddressProvider.GetCitiesMunicipalitiesByProvinceCodeAsync(value.Code);
+        CityMunicipalities = new ObservableCollection<CityMunicipality>(citiesMunicipalities);
     }
     
-    partial void OnCityMunicipalityChanged(CityMunicipality value)
+    async partial void OnCityMunicipalityChanged(CityMunicipality? value)
     {
-        Barangays =
-            new ObservableCollection<Barangay>(
-                AddressProvider.GetBarangaysByCityCode(value.Code));
-        ZipCode = AddressProvider.GetZipCodeByCityMunicipalityName(value.Name);
+        if (value == null)
+        {
+            return;
+        }
+        var barangays = await AddressProvider.GetBarangaysByCityMunicipalityCodeAsync(value.Code);
+        Barangays = new ObservableCollection<Barangay>(barangays);
+        ZipCode = await AddressProvider.GetZipCodeByCityMunicipalityNameAsync(value.Name);
     }
     
 }

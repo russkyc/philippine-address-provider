@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Russkyc.Addressess.Philippines.Configs;
 using Russkyc.Addressess.Philippines.Entities;
 using Russkyc.Addressess.Philippines.Utils;
@@ -16,9 +17,10 @@ namespace Russkyc.Addressess.Philippines
         /// Gets all regions in the Philippines.
         /// </summary>
         /// <returns>An IEnumerable of Region objects.</returns>
-        public static IEnumerable<Region> GetRegions()
+        public static async Task<IEnumerable<Region>> GetRegionsAsync()
         {
-            return JsonResourceReader.Read<Region[]>(Resource.Regions).OrderBy(region => region.RegionName);
+            return (await JsonResourceReader.ReadAsync<Region[]>(Resource.Regions))
+                .OrderBy(region => region.RegionName);
         }
 
         /// <summary>
@@ -26,9 +28,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="name">The name of the region.</param>
         /// <returns>The matching Region object, or null if not found.</returns>
-        public static Region? GetRegion(string name)
+        public static async Task<Region?> GetRegionAsync(string name)
         {
-            return GetRegions().FirstOrDefault(region => region.Name.EqualsIgnoreCase(name));
+            return (await GetRegionsAsync())
+                .FirstOrDefault(region => region.Name.EqualsIgnoreCase(name));
         }
 
         /// <summary>
@@ -36,9 +39,9 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="regionName">The region name.</param>
         /// <returns>The matching Region object, or null if not found.</returns>
-        public static Region? GetRegionByName(string regionName)
+        public static async Task<Region?> GetRegionByNameAsync(string regionName)
         {
-            return GetRegions().FirstOrDefault(region => region.RegionName.EqualsIgnoreCase(regionName));
+            return (await GetRegionsAsync()).FirstOrDefault(region => region.RegionName.EqualsIgnoreCase(regionName));
         }
 
         /// <summary>
@@ -46,9 +49,9 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="name">The string to search for in region names.</param>
         /// <returns>An IEnumerable of Region objects matching the search criteria.</returns>
-        public static IEnumerable<Region> FindRegion(string name)
+        public static async Task<IEnumerable<Region>> FindRegionAsync(string name)
         {
-            return GetRegions().Where(region => region.Name.ContainsIgnoreCase(name));
+            return (await GetRegionsAsync()).Where(region => region.Name.ContainsIgnoreCase(name));
         }
 
         /// <summary>
@@ -56,18 +59,19 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="regionName">The string to search for in region names.</param>
         /// <returns>An IEnumerable of Region objects matching the search criteria.</returns>
-        public static IEnumerable<Region> FindRegionByName(string regionName)
+        public static async Task<IEnumerable<Region>> FindRegionByNameAsync(string regionName)
         {
-            return GetRegions().Where(region => region.RegionName.ContainsIgnoreCase(regionName));
+            return (await GetRegionsAsync()).Where(region => region.RegionName.ContainsIgnoreCase(regionName));
         }
 
         /// <summary>
         /// Gets all provinces in the Philippines.
         /// </summary>
         /// <returns>An IEnumerable of Province objects.</returns>
-        public static IEnumerable<Province> GetProvinces()
+        public static async Task<IEnumerable<Province>> GetProvincesAsync()
         {
-            return JsonResourceReader.Read<Province[]>(Resource.Provinces).OrderBy(province => province.Name);
+            return (await JsonResourceReader.ReadAsync<Province[]>(Resource.Provinces))
+                .OrderBy(province => province.Name);
         }
 
         /// <summary>
@@ -75,9 +79,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="region">The Region for which to retrieve provinces.</param>
         /// <returns>An IEnumerable of Province objects in the specified region.</returns>
-        public static IEnumerable<Province> GetProvincesByRegion(Region region)
+        public static async Task<IEnumerable<Province>> GetProvincesByRegionAsync(Region region)
         {
-            return GetProvinces().Where(province => province.RegionCode.EqualsIgnoreCase(region.Code));
+            return (await GetProvincesAsync())
+                .Where(province => province.RegionCode.EqualsIgnoreCase(region.Code));
         }
 
         /// <summary>
@@ -85,9 +90,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="regionCode">The code of the region for which to retrieve provinces.</param>
         /// <returns>An IEnumerable of Province objects in the specified region.</returns>
-        public static IEnumerable<Province> GetProvincesByRegionCode(string regionCode)
+        public static async Task<IEnumerable<Province>> GetProvincesByRegionCodeAsync(string regionCode)
         {
-            return GetProvinces().Where(province => province.RegionCode.EqualsIgnoreCase(regionCode));
+            return (await GetProvincesAsync())
+                .Where(province => province.RegionCode.EqualsIgnoreCase(regionCode));
         }
 
         /// <summary>
@@ -95,9 +101,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="provinceName">The name of the province.</param>
         /// <returns>The matching Province object, or null if not found.</returns>
-        public static Province? GetProvinceByName(string provinceName)
+        public static async Task<Province?> GetProvinceByNameAsync(string provinceName)
         {
-            return GetProvinces().FirstOrDefault(province => province.Name.EqualsIgnoreCase(provinceName));
+            return (await GetProvincesAsync())
+                .FirstOrDefault(province => province.Name.EqualsIgnoreCase(provinceName));
         }
 
         /// <summary>
@@ -105,9 +112,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="provinceName">The string to search for in province names.</param>
         /// <returns>An IEnumerable of Province objects matching the search criteria.</returns>
-        public static IEnumerable<Province> FindProvinceByName(string provinceName)
+        public static async Task<IEnumerable<Province>> FindProvinceByNameAsync(string provinceName)
         {
-            return GetProvinces().Where(province => province.Name.ContainsIgnoreCase(provinceName));
+            return (await GetProvincesAsync())
+                .Where(province => province.Name.ContainsIgnoreCase(provinceName));
         }
 
         ///
@@ -117,9 +125,10 @@ namespace Russkyc.Addressess.Philippines
         /// Gets all cities and municipalities in the Philippines.
         /// </summary>
         /// <returns>An IEnumerable of CityMunicipality objects.</returns>
-        public static IEnumerable<CityMunicipality> GetCitiesMunicipalities()
+        public static async Task<IEnumerable<CityMunicipality>> GetCitiesMunicipalitiesAsync()
         {
-            return JsonResourceReader.Read<CityMunicipality[]>(Resource.CitiesMunicipalities).OrderBy(cityMunicipality => cityMunicipality.Name);
+            return (await JsonResourceReader.ReadAsync<CityMunicipality[]>(Resource.CitiesMunicipalities))
+                .OrderBy(cityMunicipality => cityMunicipality.Name);
         }
 
         /// <summary>
@@ -127,9 +136,9 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="region">The Region for which to retrieve cities and municipalities.</param>
         /// <returns>An IEnumerable of CityMunicipality objects in the specified region.</returns>
-        public static IEnumerable<CityMunicipality> GetCitiesMunicipalitiesByRegion(Region region)
+        public static async Task<IEnumerable<CityMunicipality>> GetCitiesMunicipalitiesByRegionAsync(Region region)
         {
-            return GetCitiesMunicipalities()
+            return (await GetCitiesMunicipalitiesAsync())
                 .Where(cityMunicipality => cityMunicipality.RegionCode.EqualsIgnoreCase(region.Code));
         }
 
@@ -138,9 +147,9 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="regionCode">The code of the region for which to retrieve cities and municipalities.</param>
         /// <returns>An IEnumerable of CityMunicipality objects in the specified region.</returns>
-        public static IEnumerable<CityMunicipality> GetCitiesMunicipalitiesByRegionCode(string regionCode)
+        public static async Task<IEnumerable<CityMunicipality>> GetCitiesMunicipalitiesByRegionCodeAsync(string regionCode)
         {
-            return GetCitiesMunicipalities()
+            return (await GetCitiesMunicipalitiesAsync())
                 .Where(cityMunicipality => cityMunicipality.RegionCode.EqualsIgnoreCase(regionCode));
         }
 
@@ -149,9 +158,9 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="province">The Province for which to retrieve cities and municipalities.</param>
         /// <returns>An IEnumerable of CityMunicipality objects in the specified province.</returns>
-        public static IEnumerable<CityMunicipality> GetCitiesMunicipalitiesByProvince(Province province)
+        public static async Task<IEnumerable<CityMunicipality>> GetCitiesMunicipalitiesByProvinceAsync(Province province)
         {
-            return GetCitiesMunicipalities()
+            return (await GetCitiesMunicipalitiesAsync())
                 .Where(cityMunicipality => cityMunicipality.ProvinceCode.EqualsIgnoreCase(province.Code));
         }
 
@@ -160,9 +169,9 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="provinceCode">The code of the province for which to retrieve cities and municipalities.</param>
         /// <returns>An IEnumerable of CityMunicipality objects in the specified province.</returns>
-        public static IEnumerable<CityMunicipality> GetCitiesMunicipalitiesByProvinceCode(string provinceCode)
+        public static async Task<IEnumerable<CityMunicipality>> GetCitiesMunicipalitiesByProvinceCodeAsync(string provinceCode)
         {
-            return GetCitiesMunicipalities()
+            return (await GetCitiesMunicipalitiesAsync())
                 .Where(cityMunicipality => cityMunicipality.ProvinceCode.EqualsIgnoreCase(provinceCode));
         }
 
@@ -171,11 +180,11 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="cityMunicipalityName">The name of the city or municipality.</param>
         /// <returns>The matching CityMunicipality object, or null if not found.</returns>
-        public static CityMunicipality? GetCityMunicipalityByName(string cityMunicipalityName)
+        public static async Task<CityMunicipality?> GetCityMunicipalityByNameAsync(string cityMunicipalityName)
         {
-            return GetCitiesMunicipalities().FirstOrDefault(cityMunicipality =>
-                cityMunicipality.Name.EqualsIgnoreCase(cityMunicipalityName)
-                || cityMunicipality.OldName.EqualsIgnoreCase(cityMunicipalityName));
+            return (await GetCitiesMunicipalitiesAsync())
+                .FirstOrDefault(cityMunicipality => cityMunicipality.Name.EqualsIgnoreCase(cityMunicipalityName)
+                                                    || cityMunicipality.OldName.EqualsIgnoreCase(cityMunicipalityName));
         }
 
         /// <summary>
@@ -183,20 +192,21 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="cityMunicipalityName">The string to search for in city and municipality names.</param>
         /// <returns>An IEnumerable of CityMunicipality objects matching the search criteria.</returns>
-        public static IEnumerable<CityMunicipality> FindCityMunicipalityByName(string cityMunicipalityName)
+        public static async Task<IEnumerable<CityMunicipality>> FindCityMunicipalityByNameAsync(string cityMunicipalityName)
         {
-            return GetCitiesMunicipalities().Where(cityMunicipality =>
-                cityMunicipality.Name.ContainsIgnoreCase(cityMunicipalityName)
-                || cityMunicipality.OldName.ContainsIgnoreCase(cityMunicipalityName));
+            return (await GetCitiesMunicipalitiesAsync())
+                .Where(cityMunicipality => cityMunicipality.Name.ContainsIgnoreCase(cityMunicipalityName)
+                                           || cityMunicipality.OldName.ContainsIgnoreCase(cityMunicipalityName));
         }
 
         /// <summary>
         /// Gets all barangays in the Philippines.
         /// </summary>
         /// <returns>An IEnumerable of Barangay objects.</returns>
-        public static IEnumerable<Barangay> GetBarangays()
+        public static async Task<IEnumerable<Barangay>> GetBarangaysAsync()
         {
-            return JsonResourceReader.Read<Barangay[]>(Resource.Barangays).OrderBy(barangay => barangay.Name);
+            return (await JsonResourceReader.ReadAsync<Barangay[]>(Resource.Barangays))
+                .OrderBy(barangay => barangay.Name);
         }
 
         /// <summary>
@@ -204,9 +214,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="region">The Region for which to retrieve barangays.</param>
         /// <returns>An IEnumerable of Barangay objects in the specified region.</returns>
-        public static IEnumerable<Barangay> GetBarangaysByRegion(Region region)
+        public static async Task<IEnumerable<Barangay>> GetBarangaysByRegionAsync(Region region)
         {
-            return GetBarangays().Where(barangay => barangay.RegionCode.EqualsIgnoreCase(region.Code));
+            return (await GetBarangaysAsync())
+                .Where(barangay => barangay.RegionCode.EqualsIgnoreCase(region.Code));
         }
 
         /// <summary>
@@ -214,9 +225,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="regionCode">The code of the region for which to retrieve barangays.</param>
         /// <returns>An IEnumerable of Barangay objects in the specified region.</returns>
-        public static IEnumerable<Barangay> GetBarangaysByRegionCode(string regionCode)
+        public static async Task<IEnumerable<Barangay>> GetBarangaysByRegionCodeAsync(string regionCode)
         {
-            return GetBarangays().Where(barangay => barangay.RegionCode.EqualsIgnoreCase(regionCode));
+            return (await GetBarangaysAsync())
+                .Where(barangay => barangay.RegionCode.EqualsIgnoreCase(regionCode));
         }
 
         /// <summary>
@@ -224,9 +236,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="province">The Province for which to retrieve barangays.</param>
         /// <returns>An IEnumerable of Barangay objects in the specified province.</returns>
-        public static IEnumerable<Barangay> GetBarangaysByProvince(Province province)
+        public static async Task<IEnumerable<Barangay>> GetBarangaysByProvinceAsync(Province province)
         {
-            return GetBarangays().Where(barangay => barangay.ProvinceCode.EqualsIgnoreCase(province.Code));
+            return (await GetBarangaysAsync())
+                .Where(barangay => barangay.ProvinceCode.EqualsIgnoreCase(province.Code));
         }
 
         /// <summary>
@@ -234,9 +247,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="provinceCode">The code of the province for which to retrieve barangays.</param>
         /// <returns>An IEnumerable of Barangay objects in the specified province.</returns>
-        public static IEnumerable<Barangay> GetBarangaysByProvinceCode(string provinceCode)
+        public static async Task<IEnumerable<Barangay>> GetBarangaysByProvinceCodeAsync(string provinceCode)
         {
-            return GetBarangays().Where(barangay => barangay.ProvinceCode.EqualsIgnoreCase(provinceCode));
+            return (await GetBarangaysAsync())
+                .Where(barangay => barangay.ProvinceCode.EqualsIgnoreCase(provinceCode));
         }
 
         /// <summary>
@@ -244,9 +258,9 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="cityMunicipality">The CityMunicipality for which to retrieve barangays.</param>
         /// <returns>An IEnumerable of Barangay objects in the specified city or municipality.</returns>
-        public static IEnumerable<Barangay> GetBarangaysByCityMunicipality(CityMunicipality cityMunicipality)
+        public static async Task<IEnumerable<Barangay>> GetBarangaysByCityMunicipalityAsync(CityMunicipality cityMunicipality)
         {
-            return GetBarangays()
+            return (await GetBarangaysAsync())
                 .Where(barangay => barangay.CityMunicipalityCode.EqualsIgnoreCase(cityMunicipality.Code));
         }
 
@@ -255,9 +269,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="cityCode">The code of the city or municipality for which to retrieve barangays.</param>
         /// <returns>An IEnumerable of Barangay objects in the specified city or municipality.</returns>
-        public static IEnumerable<Barangay> GetBarangaysByCityCode(string cityCode)
+        public static async Task<IEnumerable<Barangay>> GetBarangaysByCityMunicipalityCodeAsync(string cityCode)
         {
-            return GetBarangays().Where(barangay => barangay.CityMunicipalityCode.EqualsIgnoreCase(cityCode));
+            return (await GetBarangaysAsync())
+                .Where(barangay => barangay.CityMunicipalityCode.EqualsIgnoreCase(cityCode));
         }
 
         /// <summary>
@@ -265,9 +280,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="barangayName">The name of the barangay.</param>
         /// <returns>The matching Barangay object, or null if not found.</returns>
-        public static Barangay? GetBarangayByName(string barangayName)
+        public static async Task<Barangay?> GetBarangayByNameAsync(string barangayName)
         {
-            return GetBarangays().FirstOrDefault(barangay => barangay.Name.EqualsIgnoreCase(barangayName));
+            return (await GetBarangaysAsync())
+                .FirstOrDefault(barangay => barangay.Name.EqualsIgnoreCase(barangayName));
         }
 
         /// <summary>
@@ -275,9 +291,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="barangayName">The string to search for in barangay names.</param>
         /// <returns>An IEnumerable of Barangay objects matching the search criteria.</returns>
-        public static IEnumerable<Barangay> FindBarangayByName(string barangayName)
+        public static async Task<IEnumerable<Barangay>> FindBarangayByNameAsync(string barangayName)
         {
-            return GetBarangays().Where(barangay => barangay.Name.ContainsIgnoreCase(barangayName));
+            return (await GetBarangaysAsync())
+                .Where(barangay => barangay.Name.ContainsIgnoreCase(barangayName));
         }
 
         /// <summary>
@@ -285,10 +302,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="cityMunicipality">The CityMunicipality for which to retrieve the zip code.</param>
         /// <returns>The zip code for the specified city or municipality, or null if not found.</returns>
-        public static string? GetZipCodeByCityMunicipalityAndProvince(CityMunicipality cityMunicipality)
+        public static async Task<string?> GetZipCodeByCityMunicipalityAndProvinceAsync(CityMunicipality cityMunicipality)
         {
-            return JsonResourceReader.Read<Zip[]>(Resource.ZipCodes).FirstOrDefault(zip =>
-                zip.CityMunicipality.ContainsIgnoreCase(cityMunicipality.Name.CleanName()))?.ZipCode;
+            return (await JsonResourceReader.ReadAsync<Zip[]>(Resource.ZipCodes))
+                .FirstOrDefault(zip => zip.CityMunicipality.ContainsIgnoreCase(cityMunicipality.Name.CleanName()))?.ZipCode;
         }
 
         /// <summary>
@@ -296,10 +313,10 @@ namespace Russkyc.Addressess.Philippines
         /// </summary>
         /// <param name="cityMunicipalityName">The name of the city or municipality for which to retrieve the zip code.</param>
         /// <returns>The zip code for the specified city or municipality, or null if not found.</returns>
-        public static string? GetZipCodeByCityMunicipalityName(string cityMunicipalityName)
+        public static async Task<string?> GetZipCodeByCityMunicipalityNameAsync(string cityMunicipalityName)
         {
-            return JsonResourceReader.Read<Zip[]>(Resource.ZipCodes).FirstOrDefault(zip =>
-                zip.CityMunicipality.ContainsIgnoreCase(cityMunicipalityName.CleanName()))?.ZipCode;
+            return (await JsonResourceReader.ReadAsync<Zip[]>(Resource.ZipCodes))
+                .FirstOrDefault(zip => zip.CityMunicipality.ContainsIgnoreCase(cityMunicipalityName.CleanName()))?.ZipCode;
         }
     }
 }
