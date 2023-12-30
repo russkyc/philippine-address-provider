@@ -1,0 +1,58 @@
+﻿<moderncontrols:ModernWindow
+    x:Class="WpfSample.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfSample"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:viewModels="clr-namespace:WpfSample.ViewModels"
+    xmlns:views="clr-namespace:WpfSample.Views"
+    Title="MainWindow"
+    Width="550"
+    Height="250"
+    Background="{DynamicResource bg-dark}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <moderncontrols:ModernWindow.DataContext>
+        <viewModels:MainWindowViewModel />
+    </moderncontrols:ModernWindow.DataContext>
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <moderncontrols:ModernComboBox
+                Grid.Column="0"
+                DisplayMemberPath="Name"
+                IsEditable="True"
+                ItemsSource="{Binding Provinces}"
+                Placeholder="Province"
+                SelectedValue="{Binding Province}" />
+            <moderncontrols:ModernComboBox
+                Grid.Column="1"
+                Margin="7,0,0,0"
+                DisplayMemberPath="Name"
+                IsEditable="True"
+                ItemsSource="{Binding CityMunicipalities}"
+                Placeholder="City"
+                SelectedValue="{Binding CityMunicipality}" />
+            <moderncontrols:ModernComboBox
+                Grid.Column="2"
+                Margin="7,0,0,0"
+                DisplayMemberPath="Name"
+                IsEditable="True"
+                ItemsSource="{Binding Barangays}"
+                Placeholder="Barangay"
+                SelectedValue="{Binding Barangay}" />
+            <moderncontrols:ModernTextBox
+                Grid.Column="3"
+                Margin="7,0,0,0"
+                Placeholder="Zip Code"
+                Text="{Binding ZipCode}" />
+        </Grid>
+    </Grid>
+</moderncontrols:ModernWindow>

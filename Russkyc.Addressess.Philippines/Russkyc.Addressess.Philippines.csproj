@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>8</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Russkyc.Addressess.Philippines</Title>
+        <Authors>russkyc</Authors>
+        <Copyright>Russell Camo 2023</Copyright>
+        <PackageProjectUrl>https://github.com/russkyc/philippine-address-provider</PackageProjectUrl>
+        <PackageIcon>PackageIcon.png</PackageIcon>
+        <Nullable>enable</Nullable>
+        <Version>0.23.2</Version>
+        <Description>PSGC Address Provider for CSharp</Description>
+        <PackageTags>Address Philippines PH PhAddress Provider</PackageTags>
+        <RepositoryUrl>https://github.com/russkyc/philippine-address-provider</RepositoryUrl>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Cities.json" />
+      <EmbeddedResource Include="Resources\Provinces.json" />
+      <EmbeddedResource Include="Resources\Regions.json" />
+      <EmbeddedResource Include="Resources\ZipCodes.json" />
+      <Resource Include="PackageIcon.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Barangays.json" />
+    </ItemGroup>
+
+</Project>
