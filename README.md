@@ -15,7 +15,7 @@
 Nuget package installation
 
 ```
-dotnet add package Russkyc.Templates.WPF-MVVM --version 1.1.0
+dotnet add package Russkyc.Addressess.Philippines
 ```
 
 Imports
